@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
-import web.dao.UserDao;
+import web.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,37 +14,37 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public void addUser(User user) {
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public List<User> getUsers() {
         List<User> list = new ArrayList<>();
-        userDao.findAll().forEach(list::add);
+        userRepository.findAll().forEach(list::add);
         return list;
     }
 
     @Override
     public Optional<User> getById(long id) {
-        return userDao.findById(id);
+        return userRepository.findById(id);
     }
 
     @Override
     public void updateUser(User user) {
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public void deleteUser(long id) {
-        userDao.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
